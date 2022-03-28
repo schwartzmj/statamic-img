@@ -1,5 +1,5 @@
 {
-  "name": "schwartzmj/img",
+  "name": "schwartzmj/statamic-img",
   "description": "'img' tag for Statamic",
   "require": {
     "php": ">=7.4",
