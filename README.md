@@ -1,6 +1,6 @@
 # Image Components
 
-> statamic-img generates responsive and WebP images (for browsers that support it). It uses Tailwind breakpoints.
+> statamic-img generates responsive and WebP images (for browsers that support it). It uses Tailwind breakpoints. It is meant to be used as a direct replacement for the standard HTML <img /> tag.
 
 ## Features
 
