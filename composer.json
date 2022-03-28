@@ -1,0 +1,24 @@
+{
+  "name": "schwartzmj/img",
+  "description": "'img' tag for Statamic",
+  "require": {
+    "php": ">=7.4",
+    "statamic/cms": "3.3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Schwartzmj\\Img\\": "src"
+    }
+  },
+  "extra": {
+    "statamic": {
+      "name": "Img",
+      "description": "schwartzmj 'img' tag"
+    },
+    "laravel": {
+      "providers": [
+        "Schwartzmj\\Img\\ServiceProvider"
+      ]
+    }
+  }
+}
