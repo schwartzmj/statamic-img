@@ -79,23 +79,29 @@ class Img extends Tags
     }
 
     private function parseSizesInput($input) {
-        $colonSeparatedBreakpointLabelValuePairs = collect(explode(' ', $input)); // e.g. '100 md:50 xl:33.33' into ['100', 'md:50', 'xl:33.33']
+        // ->filter() removes empty values in the array (spaces from any line breaks / whitespace in templating)
+        // then we ->map and trim white space from each string (e.g. '\n\ or other spaces)
+        $colonSeparatedBreakpointLabelValuePairs = collect(explode(' ', $input))->filter()->map(function ($item) {
+            return $item->trim();
+        }); // e.g. '100 md:50 xl:33.33' into ['100', 'md:50', 'xl:33.33']
 
         // Generate array of label/screen width pairs from given input. e.g.:
         // [ 'xs' => 100', md' => 50, 'xl' => 33] (from e.g. input of: "100 md:50 xl:33.33")
         $breakpointLabelAndScreenWidthPairs = $colonSeparatedBreakpointLabelValuePairs->flatMap(function ($item) {
             $bpLabelAndScreenWidthValue = explode(':', $item);
             // If there was no breakpoint given  (e.g. md: or xl:) (count of the array is 1), then it is the 'base' breakpoint, so we assign it a key of 'xs'
+
             [$breakpointLabel, $screenWidthValue] = match (count($bpLabelAndScreenWidthValue)) {
                 1 => ['xs', $bpLabelAndScreenWidthValue[0]],
                 2 => [$bpLabelAndScreenWidthValue[0], $bpLabelAndScreenWidthValue[1]],
                 default => throw 'You probably entered too many colons (:) in one of your image sizes.'
             };
             if (!is_numeric($screenWidthValue)) {
-                throw new \Exception('A given screen width value was not numeric.');
+                throw new \Exception('A given screen width value was not numeric. ' .  $screenWidthValue);
             }
             return [$breakpointLabel => intVal(ceil(floatVal($screenWidthValue)))];
         });
+
         return $breakpointLabelAndScreenWidthPairs;
     }
 
