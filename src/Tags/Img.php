@@ -82,7 +82,7 @@ class Img extends Tags
         // ->filter() removes empty values in the array (spaces from any line breaks / whitespace in templating)
         // then we ->map and trim white space from each string (e.g. '\n\ or other spaces)
         $colonSeparatedBreakpointLabelValuePairs = collect(explode(' ', $input))->filter()->map(function ($item) {
-            return $item->trim();
+            return trim($item);
         }); // e.g. '100 md:50 xl:33.33' into ['100', 'md:50', 'xl:33.33']
 
         // Generate array of label/screen width pairs from given input. e.g.:
