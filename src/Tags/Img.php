@@ -91,6 +91,9 @@ class Img extends Tags
                 2 => [$bpLabelAndScreenWidthValue[0], intVal(ceil(floatVal($bpLabelAndScreenWidthValue[1])))],
                 default => throw 'You probably entered too many colons (:) in one of your image sizes.'
             };
+            if (!is_numeric($screenWidthValue)) {
+                return throw 'You entered a non-numeric value for a breakpoint screen width.';
+            }
             return [$breakpointLabel => $screenWidthValue];
         });
         return $breakpointLabelAndScreenWidthPairs;
