@@ -87,14 +87,14 @@ class Img extends Tags
             $bpLabelAndScreenWidthValue = explode(':', $item);
             // If there was no breakpoint given  (e.g. md: or xl:) (count of the array is 1), then it is the 'base' breakpoint, so we assign it a key of 'xs'
             [$breakpointLabel, $screenWidthValue] = match (count($bpLabelAndScreenWidthValue)) {
-                1 => ['xs', intVal(ceil(floatVal($bpLabelAndScreenWidthValue[0])))],
-                2 => [$bpLabelAndScreenWidthValue[0], intVal(ceil(floatVal($bpLabelAndScreenWidthValue[1])))],
+                1 => ['xs', $bpLabelAndScreenWidthValue[0]],
+                2 => [$bpLabelAndScreenWidthValue[0], $bpLabelAndScreenWidthValue[1]],
                 default => throw 'You probably entered too many colons (:) in one of your image sizes.'
             };
             if (!is_numeric($screenWidthValue)) {
-                return throw 'You entered a non-numeric value for a breakpoint screen width.';
+                throw new \Exception('A given screen width value was not numeric.');
             }
-            return [$breakpointLabel => $screenWidthValue];
+            return [$breakpointLabel => intVal(ceil(floatVal($screenWidthValue)))];
         });
         return $breakpointLabelAndScreenWidthPairs;
     }
